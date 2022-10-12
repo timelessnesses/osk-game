@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "template_bot"
+name = "osk-game"
 version = "0.1.0"
-description = ""
+description = "A bot inspired by sheetBot (and osk-game because yes)"
 authors = ["timelessnesses <mooping3roblox@gmail.com>"]
 
 [tool.poetry.dependencies]
