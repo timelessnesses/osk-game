@@ -1,12 +1,18 @@
-import aiohttp
-import typing
-import enum
-import datetime
 import dataclasses
+import datetime
+import enum
+import typing
+
+import aiohttp
 import dateutil.parser
+<<<<<<< HEAD
 import yarl
 from .db import db
 from .errors import APIError
+=======
+
+
+>>>>>>> 7ea7b225f2eee718e7454e3d29dbd3f16646debb
 class Request:
     @staticmethod
     async def get(url: str, headers: dict = None):
@@ -14,10 +20,12 @@ class Request:
             async with session.get(url, headers=headers) as response:
                 return await response.json()
 
+
 class Cache_Status(enum.Enum):
     HIT = "hit"
     MISS = "miss"
     AWAITED = "awaited"
+
 
 @dataclasses.dataclass
 class Cache:
@@ -25,15 +33,17 @@ class Cache:
     cached_at: datetime.datetime
     cache_until: datetime.datetime
 
+
 class Role(enum.Enum):
     anonymous = "anon"
     user = "user"
     bot = "bot"
     moderator = "mod"
     adminstrator = "admin"
-    
+
     def __str__(self):
         return self.name.title()
+
 
 @dataclasses.dataclass
 class Badge:
@@ -41,6 +51,7 @@ class Badge:
     label: str
     ts: typing.Optional[datetime.datetime]
 
+<<<<<<< HEAD
 class Rank(enum.Enum):
     unranked = "z"
     d = "d"
@@ -83,6 +94,9 @@ class League:
     next_rank: typing.Optional[Rank]
     next_at: typing.Optional[int]
     percentile_rank: Rank
+=======
+
+>>>>>>> 7ea7b225f2eee718e7454e3d29dbd3f16646debb
 @dataclasses.dataclass
 class User:
     id: str
@@ -91,6 +105,7 @@ class User:
     ts: typing.Optional[datetime.datetime]
     botmaster: typing.Optional["User"]
     badges: typing.List[Badge]
+<<<<<<< HEAD
     xp: float
     gamesplayed: int
     gameswon: int
@@ -104,15 +119,22 @@ class User:
     banner_revision: typing.Optional[yarl.URL]
     bio: typing.Optional[str]
     friend_count: int
+=======
+
+
+>>>>>>> 7ea7b225f2eee718e7454e3d29dbd3f16646debb
 @dataclasses.dataclass
 class Data:
     user: typing.Optional[User]
+
+
 @dataclasses.dataclass
 class PlayerAPI:
-    success:bool
+    success: bool
     error: typing.Optional[str]
     cache: typing.Optional[Cache]
     data: typing.Optional[Data]
+<<<<<<< HEAD
     @classmethod
     async def get_player(username:str) -> "PlayerAPI":
         cache = await db.fetch("SELECT * FROM cache WHERE username = $1", username)
@@ -126,5 +148,9 @@ class PlayerAPI:
             
     
     
+=======
+
+
+>>>>>>> 7ea7b225f2eee718e7454e3d29dbd3f16646debb
 def timestring_to_datetime(time_string) -> datetime:
     return dateutil.parser.parse(time_string)
