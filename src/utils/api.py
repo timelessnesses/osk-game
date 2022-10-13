@@ -7,7 +7,7 @@ import aiohttp
 import dateutil.parser
 import yarl
 
-from .db import db
+from .db import db,connect
 from .errors import APIError
 import orjson
 import copy
@@ -190,7 +190,8 @@ class PlayerAPI:
     data: typing.Optional[Data]
 
     @classmethod
-    async def get_player(username: str) -> "PlayerAPI":
+    async def get_player(cls,username: str) -> "PlayerAPI":
+        await connect()
         cache = await db.fetch("SELECT * FROM cache WHERE username = $1", username)
         base_url = yarl.URL("https://ch.tetr.io/api/users")
         result = None
@@ -221,10 +222,9 @@ class PlayerAPI:
         args["league"]["next_rank"] = Rank(args["league"]["next_rank"]) if args["league"]["next_rank"] else None
         args["league"]["percentile_rank"] = Rank(args["league"]["percentile_rank"])
         args["league"] = League(**args["league"])
-        args["user"]["avatar_revision"] = yarl.URL(f'args["user"]["avatar_revision"]') if args["user"]["avatar_revision"] else None
-        
-        
-        return PlayerAPI(**args)
+        args["user"]["avatar_revision"] = yarl.URL(f'https://tetr.io/user-content/avatars/{args["user"]["_id"]}.jpg?rv={args["user"]["avatar_revision"]}') if args["user"]["avatar_revision"] else None
+        args["user"]["banner_revision"] = yarl.URL(f'https://tetr.io/user-content/banners/{args["user"]["_id"]}.jpg?rv={args["user"]["banner_revision"]}') if args["user"]["banner_revision"] else None
+        return cls(**args)
 
 
 def timestring_to_datetime(time_string) -> datetime:
