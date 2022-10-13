@@ -1,4 +1,3 @@
-import copy
 import dataclasses
 import datetime
 import enum
@@ -173,18 +172,32 @@ class PlayerAPI:
             if args["cache"]["cached_at"]
             else datetime.datetime.now().timestamp()
         )
-        args["data"]["user"]["league"]["glicko"] = args["data"]["user"]["league"].get("glicko", None)
-        args["data"]["user"]["league"]["rd"] = args["data"]["user"]["league"].get("rd", None)
-        args["data"]["user"]["league"]["apm"] = args["data"]["user"]["league"].get("apm", None)
-        args["data"]["user"]["league"]["pps"] = args["data"]["user"]["league"].get("pps", None)
-        args["data"]["user"]["league"]["vs"] = args["data"]["user"]["league"].get("vs", None)
+        args["data"]["user"]["league"]["glicko"] = args["data"]["user"]["league"].get(
+            "glicko", None
+        )
+        args["data"]["user"]["league"]["rd"] = args["data"]["user"]["league"].get(
+            "rd", None
+        )
+        args["data"]["user"]["league"]["apm"] = args["data"]["user"]["league"].get(
+            "apm", None
+        )
+        args["data"]["user"]["league"]["pps"] = args["data"]["user"]["league"].get(
+            "pps", None
+        )
+        args["data"]["user"]["league"]["vs"] = args["data"]["user"]["league"].get(
+            "vs", None
+        )
         args["cache"]["cached_until"] = datetime.datetime.fromtimestamp(
             args["cache"]["cached_until"] / 1000
             if args["cache"]["cached_until"]
             else datetime.datetime.now().timestamp()
         )
-        args["data"]["user"]["supporter"] = args["data"]["user"].get("supporter", False) # wow osk
-        args["data"]["user"]["friend_count"] = args["data"]["user"].get("friend_count", 0) # wow osk
+        args["data"]["user"]["supporter"] = args["data"]["user"].get(
+            "supporter", False
+        )  # wow osk
+        args["data"]["user"]["friend_count"] = args["data"]["user"].get(
+            "friend_count", 0
+        )  # wow osk
         args["data"]["user"]["bio"] = args["data"]["user"].get("bio", None)
         args["cache"]["status"] = Cache_Status(args["cache"]["status"])
         args["data"]["user"]["botmaster"] = (
