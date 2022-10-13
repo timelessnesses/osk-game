@@ -11,6 +11,7 @@ import logging
 import os
 import subprocess
 import traceback
+import src.utils.sqls
 
 formatting = logging.Formatter("[%(asctime)s] - [%(levelname)s] [%(name)s] %(message)s")
 
@@ -117,6 +118,12 @@ async def main():
                 log.info(
                     f"Started with version {bot.version_} and started at {bot.start_time}"
                 )
+
+                db = src.utils.sqls.EasySQL()
+                await db.connect()
+                with open("src/utils/sqls/init.sql") as f:
+                    await db.execute(f.read())
+
                 try:
                     await bot.start(os.environ["TOKEN"])
                 except discord.errors.HTTPException:
