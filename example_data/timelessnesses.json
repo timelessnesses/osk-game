@@ -1,0 +1,55 @@
+{
+	"success": true,
+	"data": {
+		"user": {
+			"_id": "61a06af00bf7c9b332b5c134",
+			"username": "timelessnesses",
+			"role": "user",
+			"ts": "2021-11-26T05:04:48.665Z",
+			"badges": [
+				{
+					"id": "ift_2",
+					"label": "Infinite Finesse Tournament Second Place",
+					"ts": null
+				}
+			],
+			"xp": 2275384.5,
+			"gamesplayed": 1873,
+			"gameswon": 623,
+			"gametime": 684426.3065555533,
+			"country": "TH",
+			"supporter": false,
+			"supporter_tier": 0,
+			"verified": false,
+			"league": {
+				"gamesplayed": 760,
+				"gameswon": 402,
+				"rating": 19659.38676758211,
+				"glicko": 1841.1660730556614,
+				"rd": 127.69102210653995,
+				"rank": "z",
+				"apm": 33.17,
+				"pps": 1.33,
+				"vs": 70.37,
+				"decaying": true,
+				"standing": -1,
+				"standing_local": -1,
+				"prev_rank": null,
+				"prev_at": -1,
+				"next_rank": null,
+				"next_at": -1,
+				"percentile": 0.18042844466979338,
+				"percentile_rank": "s"
+			},
+			"avatar_revision": 1656061015283,
+			"banner_revision": 1654596638029,
+			"bio": "15 years old coder/Tetris enjoyer and very noob at it :sadchamp: art works by CatalsymCake",
+			"friend_count": 69
+		}
+	},
+	"cache": {
+		"status": "miss",
+		"cached_at": 1665573977658,
+		"cached_until": 1665574277658
+	}
+}

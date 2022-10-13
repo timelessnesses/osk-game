@@ -1,0 +1,46 @@
+{
+	"success": true,
+	"data": {
+		"user": {
+			"_id": "631877dba79b763b03ae8f32",
+			"username": "unpredictable",
+			"role": "user",
+			"ts": "2022-09-07T10:52:11.926Z",
+			"badges": [],
+			"xp": 280098,
+			"gamesplayed": 191,
+			"gameswon": 65,
+			"gametime": 89981.84788888886,
+			"country": "TH",
+			"supporter_tier": 0,
+			"verified": false,
+			"league": {
+				"gamesplayed": 96,
+				"gameswon": 52,
+				"rating": 20248.60894324489,
+				"glicko": 1879.5291051549718,
+				"rd": 60.96732415392065,
+				"rank": "s+",
+				"apm": 43.5,
+				"pps": 1.53,
+				"vs": 91.71,
+				"decaying": false,
+				"standing": 6282,
+				"percentile": 0.15986256044795114,
+				"standing_local": 55,
+				"prev_rank": "s",
+				"prev_at": 6679,
+				"next_rank": "ss",
+				"next_at": 4322,
+				"percentile_rank": "s+"
+			},
+			"avatar_revision": 1665159015499,
+			"friend_count": 9
+		}
+	},
+	"cache": {
+		"status": "miss",
+		"cached_at": 1665638093266,
+		"cached_until": 1665638393266
+	}
+}
