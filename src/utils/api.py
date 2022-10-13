@@ -6,8 +6,11 @@ import typing
 import aiohttp
 import dateutil.parser
 import yarl
+
 from .db import db
 from .errors import APIError
+
+
 class Request:
     @staticmethod
     async def get(url: str, headers: dict = None):
@@ -46,6 +49,7 @@ class Badge:
     label: str
     ts: typing.Optional[datetime.datetime]
 
+
 class Rank(enum.Enum):
     unranked = "z"
     d = "d"
@@ -65,9 +69,10 @@ class Rank(enum.Enum):
     ss = "ss"
     u = "u"
     x = "x"
-    
+
     def __str__(self) -> typing.AnyStr:
         return self.value if self.name != "unranked" else "Unranked"
+
 
 @dataclasses.dataclass
 class League:
@@ -88,6 +93,8 @@ class League:
     next_rank: typing.Optional[Rank]
     next_at: typing.Optional[int]
     percentile_rank: Rank
+
+
 @dataclasses.dataclass
 class User:
     id: str
@@ -109,6 +116,8 @@ class User:
     banner_revision: typing.Optional[yarl.URL]
     bio: typing.Optional[str]
     friend_count: int
+
+
 @dataclasses.dataclass
 class Data:
     user: typing.Optional[User]
@@ -120,18 +129,18 @@ class PlayerAPI:
     error: typing.Optional[str]
     cache: typing.Optional[Cache]
     data: typing.Optional[Data]
+
     @classmethod
-    async def get_player(username:str) -> "PlayerAPI":
+    async def get_player(username: str) -> "PlayerAPI":
         cache = await db.fetch("SELECT * FROM cache WHERE username = $1", username)
         base_url = yarl.URL("https://ch.tetr.io/api/users")
         if cache:
             # filter some data that isn't exists or none
-            result:dict = cache[0]
+            result: dict = cache[0]
             if not result["success"]:
-                response = await (await Request.get(base_url/username)).json()
+                await (await Request.get(base_url / username)).json()
                 raise APIError(result["error"])
-            
-    
-    
+
+
 def timestring_to_datetime(time_string) -> datetime:
     return dateutil.parser.parse(time_string)
