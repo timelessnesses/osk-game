@@ -1,3 +1,4 @@
+import copy
 import dataclasses
 import datetime
 import enum
@@ -5,12 +6,11 @@ import typing
 
 import aiohttp
 import dateutil.parser
+import orjson
 import yarl
 
 from .db import db
 from .errors import APIError
-import orjson
-import copy
 
 complete = {
     "success": None,
@@ -20,10 +20,8 @@ complete = {
             "username": None,
             "role": None,
             "ts": None,
-            "botmaster":None,
-            "badges": [
-                
-            ],
+            "botmaster": None,
+            "badges": [],
             "xp": None,
             "gamesplayed": None,
             "gameswon": None,
@@ -51,7 +49,7 @@ complete = {
                 "next_rank": None,
                 "next_at": None,
                 "percentile": None,
-                "percentile_rank": None
+                "percentile_rank": None,
             },
             "avatar_revision": None,
             "banner_revision": None,
@@ -64,7 +62,7 @@ complete = {
         "cached_at": None,
         "cached_until": None,
     },
-    "error": None
+    "error": None,
 }
 
 
@@ -201,29 +199,42 @@ class PlayerAPI:
                 response = await Request.get(base_url / username)
                 if not response["success"]:
                     raise APIError(result["error"])
-                await db.execute("DELETE FROM cache_player_info WHERE username = $1", username)
+                await db.execute(
+                    "DELETE FROM cache_player_info WHERE username = $1", username
+                )
                 await db.execute(
                     "INSERT INTO cache_player_info(username, data) VALUES($1, $2)",
                     username,
-                    orjson.dumps(response)
+                    orjson.dumps(response),
                 )
                 result = response
-        
+
         copied = copy.deepcopy(complete)
-        copied.update(result) # replace the default values with the ones from the API
+        copied.update(result)  # replace the default values with the ones from the API
         args = copied
-        args["cache"]["cached_at"] = datetime.datetime.fromtimestamp(args["cache"]["cached_at"] / 1000)
-        args["cache"]["cached_until"] = datetime.datetime.fromtimestamp(args["cache"]["cached_until"] / 1000)
+        args["cache"]["cached_at"] = datetime.datetime.fromtimestamp(
+            args["cache"]["cached_at"] / 1000
+        )
+        args["cache"]["cached_until"] = datetime.datetime.fromtimestamp(
+            args["cache"]["cached_until"] / 1000
+        )
         args["user"]["badges"] = [Badge(**badge) for badge in args["user"]["badges"]]
         args["user"]["ts"] = timestring_to_datetime(args["user"]["ts"])
-        args["league"]["prev_rank"] = Rank(args["league"]["prev_rank"]) if args["league"]["prev_rank"] else None
+        args["league"]["prev_rank"] = (
+            Rank(args["league"]["prev_rank"]) if args["league"]["prev_rank"] else None
+        )
         args["league"]["rank"] = Rank(args["league"]["rank"])
-        args["league"]["next_rank"] = Rank(args["league"]["next_rank"]) if args["league"]["next_rank"] else None
+        args["league"]["next_rank"] = (
+            Rank(args["league"]["next_rank"]) if args["league"]["next_rank"] else None
+        )
         args["league"]["percentile_rank"] = Rank(args["league"]["percentile_rank"])
         args["league"] = League(**args["league"])
-        args["user"]["avatar_revision"] = yarl.URL(f'args["user"]["avatar_revision"]') if args["user"]["avatar_revision"] else None
-        
-        
+        args["user"]["avatar_revision"] = (
+            yarl.URL(f'args["user"]["avatar_revision"]')
+            if args["user"]["avatar_revision"]
+            else None
+        )
+
         return PlayerAPI(**args)
 
 
