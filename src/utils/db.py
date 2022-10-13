@@ -2,8 +2,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 import os
-import asyncpg
 import typing
+
+import asyncpg
 
 db: typing.Optional[asyncpg.Connection] = None
 
