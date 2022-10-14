@@ -1,23 +1,24 @@
 import math
 
+# waste kwargs for ignore any other arguments and yeah im too lazy
 
-def app(apm: float, pps: float) -> float:
+def app(apm: float, pps: float, **waste: dict) -> float:
     return apm / (pps * 60)
 
 
-def ds_second(vs: float, apm: float) -> float:
+def ds_second(vs: float, apm: float, **waste: dict) -> float:
     return (vs / 100) - (apm / 60)
 
 
-def ds_piece(vs: float, apm: float, pps: float) -> float:
+def ds_piece(vs: float, apm: float, pps: float, **waste: dict) -> float:
     return ds_second(vs, apm) / pps
 
 
-def app_ds_piece(vs: float, apm: float, pps: float) -> float:
+def app_ds_piece(vs: float, apm: float, pps: float, **waste: dict) -> float:
     return ds_piece(vs, apm, pps) + apm / (pps * 60)
 
 
-def cheese_index(vs: float, apm: float, pps: float) -> float:
+def cheese_index(vs: float, apm: float, pps: float, **waste: dict) -> float:
     return (
         (ds_piece(vs, apm, pps) * 150)
         + (((vs / apm) - 2) * 50)
@@ -25,11 +26,11 @@ def cheese_index(vs: float, apm: float, pps: float) -> float:
     )
 
 
-def garbage_efficiency(vs: float, apm: float, pps: float) -> float:
+def garbage_efficiency(vs: float, apm: float, pps: float, **waste: dict) -> float:
     return ((app(apm, pps) * ds_second(vs, apm)) / pps) * 2
 
 
-def area(apm, pps, vs) -> float:
+def area(apm:float, pps:float, vs:float, **waste: dict) -> float:
     return (
         apm
         + pps * 45
@@ -41,11 +42,11 @@ def area(apm, pps, vs) -> float:
     )
 
 
-def weighted_app(apm, pps, vs) -> float:
+def weighted_app(apm: float, pps: float, vs: float, **waste: dict) -> float:
     return app(apm, pps) - 5 * math.tan((cheese_index(vs, apm, pps) / -30) + 1)
 
 
-def estimated_tr(pps: float, apm: float, vs: float, rd: float) -> float:
+def estimated_tr(pps: float, apm: float, vs: float, rd: float, **waste: dict) -> float:
     return 25000 / (
         1
         + (
