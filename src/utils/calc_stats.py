@@ -2,6 +2,7 @@ import math
 
 # waste kwargs for ignore any other arguments and yeah im too lazy
 
+
 def app(apm: float, pps: float, **waste: dict) -> float:
     return apm / (pps * 60)
 
@@ -30,7 +31,7 @@ def garbage_efficiency(vs: float, apm: float, pps: float, **waste: dict) -> floa
     return ((app(apm, pps) * ds_second(vs, apm)) / pps) * 2
 
 
-def area(apm:float, pps:float, vs:float, **waste: dict) -> float:
+def area(apm: float, pps: float, vs: float, **waste: dict) -> float:
     return (
         apm
         + pps * 45
